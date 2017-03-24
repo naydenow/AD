@@ -79,6 +79,7 @@ class ad_routes
 
 		if ($co === 3){
 			$masp['id'] 	= $uri_parts[2];
+			$qwer['*'] 		= $uri_parts[2];
 		}
 
 		if ($co > 3 ){

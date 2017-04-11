@@ -1,0 +1,13 @@
+/node_modules/*
+/node_modules
+node_modules
+/public/*
+/components/*
+/app/lib/cms/*
+/app/controller/*
+/app/lang/*
+/app/model/*
+/app/table/*
+/app/viewer/*
+/app/config.php
+/app/routes.php

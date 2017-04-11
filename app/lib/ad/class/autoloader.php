@@ -13,6 +13,9 @@ class Autoloader
         	 $pathParts = explode('\\', $className);
         }
         self::$_lastLoadedFilename = implode(DIRECTORY_SEPARATOR, $pathParts) . '.php';
+
+        //echo ROOT.self::$_lastLoadedFilename.'<br>';
+        
         if(file_exists(DIR.self::$_lastLoadedFilename))
             require_once(DIR.self::$_lastLoadedFilename);
         else

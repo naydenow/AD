@@ -6,4 +6,5 @@
 */
 	
 return array('index'		=>'index/index',
+			 'admin*'		=>'admin/index',
 			 'index2*'		=>'index/index');

@@ -12,7 +12,7 @@ return array(
   '404_controller'  => 'index',
   '404_action'      => 'e404',
   'default_controller' => 'index',
-  'default_action' => 'start',
+  'default_action' => 'index',
   'default_template'  => 'main',
   'templatepath' => '/viewer/',
 

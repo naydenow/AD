@@ -121,7 +121,8 @@ class AD
 		if ($action !== false){
 			if (!self::start_controller($controller,$action)){
 
-				self::initRouts();
+				if(self::initRouts())
+					return;
 				
 				self::start_controller(self::config("404_controller"),self::config("404_action"));
 				
@@ -227,7 +228,7 @@ class AD
 
 		foreach (self::$routsCache as $route) {
 			if ($route->test($request))
-				return;
+				return true;
 		}
 	
 	}

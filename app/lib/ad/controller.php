@@ -183,7 +183,7 @@ class ad_controller extends ad_abstract_controller
 
 	public function json($data = array(),$tplname = false)
 	{
-		header('Content-Type: application/json');
+		@header('Content-Type: application/json');
 		$this->_start($data,$tplname);
 		$this->content = json_encode($this->arData);
 		return $this;

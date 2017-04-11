@@ -15,6 +15,7 @@ return array(
   'default_action' => 'index',
   'default_template'  => 'main',
   'templatepath' => '/viewer/',
+  'routs_path' => '/routs/',
 
   'phpcache' => array('path'=>'cache/php/',
                       'time'=>60000,

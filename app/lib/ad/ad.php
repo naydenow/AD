@@ -16,8 +16,10 @@ class AD
 	static private   $GET;
 	static private   $POST;
 	static private   $REQUEST;
-	static private   $Registry = array();
-	static public 	 $errors = array();
+	static private   $HEADERS;
+	static private   $Registry = [];
+	static public 	 $errors = [];
+	static protected 	 $routsCache = [];
 
 	/**
 	 * Предупреждение
@@ -76,10 +78,11 @@ class AD
 		self::$GET = $_GET; 
 		self::$POST = $_POST; 
 		self::$REQUEST = array_merge($_REQUEST,self::$Router->getRequest()); 
+		self::$HEADERS = apache_request_headers();
 
 	}
 
-	static private function start_cintroller($controller,$action){
+	static private function start_controller($controller,$action) {
 		if (file_exists(self::$dir."/controller/".$controller.".php")){	
 			include_once(self::$dir."/controller/".$controller.".php");
 			//Создаём экземпляр класса
@@ -91,12 +94,14 @@ class AD
 			}	else {
 				self::setError('app','not found method '.$action.'_action , controller '.$controller);
 			}	
-				return true;
+
+			return true;
+
 		}	else {
-			self::setError('app','eroro load   '.$controller.' -> '.$action );
-				return false;	
-			}
+			return false;	
+		}
 	}
+
 	static public function start()
 	{
 		//Удалёяем глобальные массивы
@@ -114,9 +119,11 @@ class AD
 		// exit();
 
 		if ($action !== false){
-			if (!self::start_cintroller($controller,$action)){
+			if (!self::start_controller($controller,$action)){
+
+				self::initRouts();
 				
-				self::start_cintroller(self::config("404_controller"),self::config("404_action"));
+				self::start_controller(self::config("404_controller"),self::config("404_action"));
 				
 			}
 		}
@@ -162,6 +169,18 @@ class AD
 		}
 	}
 
+	static public function headers($par = false)
+	{
+		if ($par === false){
+			return self::_vaid(self::$HEADERS);
+		} else {
+			return self::_vaid(self::$HEADERS[$par]);
+		}
+	}
+
+
+	
+
 
 	static public function request($par = false)
 	{
@@ -181,8 +200,7 @@ class AD
 	 * @return config array
  	*/
  	
-	static public function DI($classname,$par = array(),$n = false)
-	{
+	static public function DI($classname,$par = array(),$n = false) {
 
 		if(!$n){
 			if(!empty(self::$Registry[$classname])){
@@ -196,6 +214,27 @@ class AD
 			return self::$Registry[$classname] = $_c;
 		}
 
+	}
+
+	/** TODO - сделать кеширование мепа */
+	static public function initRouts(){
+		$request = new ad_request(AD::get(),AD::post(),AD::headers());
+
+
+		foreach (glob(self::$dir.self::$conf['routs_path']."*.php") as $routs) {
+			include_once $routs;
+		}
+
+		foreach (self::$routsCache as $route) {
+			if ($route->test($request))
+				return;
+		}
+	
+	}
+
+
+	static public function route($method, $url, $fn){
+		self::$routsCache[] = new ad_route($method, $url, $fn);
 	}
 
 }

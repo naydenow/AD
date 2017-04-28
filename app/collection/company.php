@@ -1,0 +1,3 @@
+<?php class collection_company extends ad_orm {
+				protected $columnNames = ['image' => ['type' => 'String','default' => 'NULL'],'title' => ['type' => 'String','default' => 'NULL'],'descriptions' => ['type' => 'Text','default' => 'NULL'],'phone' => ['type' => 'String','default' => 'NULL'],'email' => ['type' => 'String','default' => 'NULL'],'pre_title' => ['type' => 'Text','default' => 'NULL']];
+			}

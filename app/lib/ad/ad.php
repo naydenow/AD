@@ -85,8 +85,11 @@ class AD
 	static private function start_controller($controller,$action) {
 		if (file_exists(self::$dir."/controller/".$controller.".php")){	
 			include_once(self::$dir."/controller/".$controller.".php");
+			
 			//Создаём экземпляр класса
-			$class = new $controller($controller);
+
+	
+			$class = new $controller($controller,self::$dir);
 			if (method_exists($class ,$action."_action")){
 				$act = $action."_action"; 
 				//Запускаем экшен контроллера
@@ -203,15 +206,22 @@ class AD
  	
 	static public function DI($classname,$par = array(),$n = false) {
 
+
 		if(!$n){
 			if(!empty(self::$Registry[$classname])){
 				return self::$Registry[$classname];
 			} else {
-				$_c = new $classname($par);
+
+				$r = new ReflectionClass($classname);
+   				$_c = $r->newInstanceArgs($par);
+
 				return self::$Registry[$classname] = $_c;
 			}
 		} else {
-			$_c = new $classname($par);
+
+			$r = new ReflectionClass($classname);
+   			$_c = $r->newInstanceArgs($par);
+
 			return self::$Registry[$classname] = $_c;
 		}
 
@@ -236,6 +246,16 @@ class AD
 
 	static public function route($method, $url, $fn){
 		self::$routsCache[] = new ad_route($method, $url, $fn);
+	}
+
+	static public function pre($obj){
+		echo "<pre>";
+		if (is_array($obj)){
+			print_r($obj);
+		} else {
+			var_dump($obj);
+		}
+		echo "</pre>";
 	}
 
 }

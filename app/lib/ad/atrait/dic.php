@@ -13,7 +13,7 @@ Trait dic
 {
 	public  function __call($name,$arguments = array())
 	{
-		return \AD::DI($name,array_shift($arguments));
+		return \AD::DI($name,$arguments);
 	}
 
 	public function __get($n){

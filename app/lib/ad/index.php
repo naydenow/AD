@@ -9,6 +9,8 @@ define ("DATA", date("Y-m-d") ); //'2015-01-31'+
 define ("ROOT",  AD.'/../../' );
 define ("DIR",AD.'/../');
 define ("LANG",'ru');
+define ("_PUBLIC",  $_SERVER['DOCUMENT_ROOT']);
+
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);

@@ -26,15 +26,15 @@ return array(
                       'metod'=>'html'),
   'db' =>    array(
                   'host'      => 'localhost',
-                  'user'      => 'root',
-                  'pass'      => 'root',
-                  'db'        => 'main',
+                  'user'      => 'testdb',
+                  'pass'      => 'testdb',
+                  'db'        => 'testdb',
                   'port'      => NULL,
                   'socket'    => NULL,
                   'pconnect'  => FALSE,
                   'charset'   => 'utf8',
                   'errmode'   => 'error', //or exception
                   'exception' => 'Exception', //Exception class name
-                  'name'      =>  'main'
+                  'name'      =>  'testdb'
                 )
 );

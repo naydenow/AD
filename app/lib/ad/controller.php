@@ -28,19 +28,28 @@ class ad_controller extends ad_abstract_controller
 	public $arData = array();
 	private $cache = false;
 	private $cachename;
+	private $dir;
 	private $content = false;
 	protected $noview = true;
 
-	function __construct($par)
+	function __construct($par,$dir)
 	{
 		$this->name = $par;
 		$this->tpname= $par;
+		$this->dir($dir);
 	} 
 
 	public function close($text)
 	{
 		$this->noview = false;
 		echo $text;
+	}
+
+	public function dir($dir = false){
+		if (!$dir)
+			return $this->dir;
+		else 
+			$this->dir = $dir;
 	}
 
 	/**
@@ -78,7 +87,7 @@ class ad_controller extends ad_abstract_controller
 			$name = $this->templateName;
 		}
 
-		include_once(ROOT.'viewer/template/'.$name.'/header.php');
+		include_once($this->dir().'/viewer/template/'.$name.'/header.php');
 
 		return $this;
 	}
@@ -93,7 +102,7 @@ class ad_controller extends ad_abstract_controller
 			$name = $this->templateName;
 		}
 
-		include_once(ROOT.'viewer/template/'.$name.'/footer.php');
+		include_once($this->dir().'/viewer/template/'.$name.'/footer.php');
 		return $this;
 	}
 
@@ -143,10 +152,10 @@ class ad_controller extends ad_abstract_controller
 
 		$this->_start($data,$tplname);
 		ob_start(); 
-		if (file_exists(AD::dir()."/viewer/".$this->tpname.".php")){
-			include_once(AD::dir()."/viewer/".$this->tpname.".php");
+		if (file_exists($this->dir()."/viewer/".$this->tpname.".php")){
+			include_once($this->dir()."/viewer/".$this->tpname.".php");
 		} else {
-			include_once(AD::dir()."/viewer/default.php");			
+			include_once($this->dir()."/viewer/default.php");			
 		}
 		$this->content = ob_get_contents();
 		ob_end_clean();

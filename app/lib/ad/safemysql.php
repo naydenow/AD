@@ -55,6 +55,10 @@ class ad_safemysql
 		unset($opt); // I am paranoid
 	}
 
+	public function getMySQLi(){
+		return $this->conn;
+	}
+
 	/**
 	 * Conventional function to run a query with placeholders. A mysqli_query wrapper with placeholders support
 	 * 
